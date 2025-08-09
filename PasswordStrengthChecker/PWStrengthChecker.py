@@ -1,5 +1,11 @@
 #------------------ Global Variables ---------------
 password = ''
+
+
+
+
+
+
 #------------------ Subfunctions -------------------
 
 def pwLength():
@@ -33,9 +39,8 @@ def pwLength():
                      return userPW        
 
             else:
-                return newPW
-
-
+                print("PW Accepted.")
+                return userPW
 
 #------------------ Main Program ---------------------
 
