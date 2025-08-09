@@ -5,7 +5,9 @@ import re
 
 #------------------ Global Variables ---------------
 password = ''
-
+ogPWCount = 0
+newPWCount = 0
+criteria = 0 
 #------------------ Lists --------------------------
 specialChar = [
     "!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/",
@@ -15,6 +17,7 @@ specialChar = [
 #------------------ Subfunctions -------------------
 
 def pwLength():
+    criteria =+ 1 
     while True:
             userPW = input("Please enter password for evaluation:")
             length = len(userPW)
@@ -45,11 +48,12 @@ def pwLength():
                      return userPW        
 
             else:
-                print("PW Accepted.")
+                ogPWCount += 1
                 return userPW
             
 
-def uniquenessOfPW(password): #Used to check for special characters/numbers.
+def uniquenessOfPW(password): #check for numbers, letters, and special characters. 
+    criteria =+ 1
     if password.isalpha():
         print("Password must include numbers.")
         q = input("Enter new password or type '1' if you want me to create one for you: ")
@@ -89,10 +93,16 @@ def uniquenessOfPW(password): #Used to check for special characters/numbers.
                 return newPW
             else:
                 return q
-
+        else:
+            ogPWCount += 1
+            return newPW
+        
 
 #------------------ Main Program ---------------------
 
 password = pwLength()
 password = uniquenessOfPW(password)
 print(f"Final password is: {password}")
+
+print(f"Your original password a strength rating of {ogPWCount} out of {criteria}")
+print(f"\n But after the ammendments it now has a score of {newPWCount} out of {criteria}")
