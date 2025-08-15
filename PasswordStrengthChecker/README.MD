@@ -1,1 +1,0 @@
-#A simple password checker that looks at size, memorability, and uniqueness, then offers to edit/ammend the PW to make it fit all the criteria.`

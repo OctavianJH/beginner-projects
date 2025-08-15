@@ -1,1 +1,0 @@
-#As the name suggests, it is Rock Paper Scissors.
