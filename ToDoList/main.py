@@ -1,53 +1,89 @@
+#Lists
+tasks = []
+
 #Subprograms
-
 def viewTasks():
-    print("View all tasks:")
+    if not tasks:
+        print("No tasks yet!")
+    else:
+        print("\nYour tasks:")
+        for i, task in enumerate(tasks, 1):
+            print(f"{i}. {task}")
 
-def addTasks():
-    print("Add a new task:")
-    
-def deleteTasks():
-    print("Delete a task:")
+
+def save_tasks(filename, tasks):
+    with open(filename, "w") as f:
+        for task in tasks:
+            f.write(task + "\n")
+
+
+def deleteTasks(filename):
+    global tasks
+    if not tasks:
+        print("No tasks to delete!")
+        return
+
+    for i, task in enumerate(tasks, 1):
+        print(f"{i}. {task}")
+
+    try:
+        task_num = int(input("Enter task number to delete: "))
+        if 1 <= task_num <= len(tasks):
+            removed = tasks.pop(task_num - 1)
+            print(f"Task '{removed}' deleted.")
+            save_tasks(filename, tasks)
+        else:
+            print("Invalid task number.")
+    except ValueError:
+        print("Please enter a valid number.")
+
+
+def displayMenu():
+    print("\n--- TO-DO LIST ---")
+    print("1. View tasks")
+    print("2. Add a task")
+    print("3. Delete a task")
+    print("4. Quit")
+
 
 def main():
-    print("Welcome to the To-Do List application!")
+    global tasks
+    filename = "tasks.txt"
+    tasks = loadTasks(filename)
+
     while True:
-        print("\nMenu:")
-        print("1. View Tasks")
-        print("2. Add Task")
-        print("3. Delete Task")
-        print("4. Exit")
-        
-        choice = input("Please choose an option (1-4): ")
-        
+        displayMenu()
+        choice = input("Choose an option between 1-4: ")
+
         if choice == '1':
             viewTasks()
+
         elif choice == '2':
-            addTasks()
+            new_task = input("Enter the new task: ")
+            tasks.append(new_task)
+            print(f"Task '{new_task}' added.")
+            save_tasks(filename, tasks)
+
         elif choice == '3':
-            deleteTasks()
-        elif choice == '4':
-            print("Exiting the application. Goodbye!")
+            deleteTasks(filename)
+
+        elif choice == "4":
+            save_tasks(filename, tasks)
+            print("Tasks saved. Goodbye!")
             break
         else:
-            print("Invalid choice, please try again.")
+            print("Invalid option, please try again.")
 
-def loadFile(filename):
+
+def loadTasks(filename):
     try:
         with open(filename, "r") as f:
-            tasks = [line.strip()for line in f]
-            
-    except FileNotFoundError as e:
-        print(f"Sorry, there was an error: {e}")
+            tasks = [line.strip() for line in f]
+    except FileNotFoundError:
+        print("No existing task file found. Starting fresh.")
         tasks = []
-        
-        return tasks
-            
-            
-        
-    
+    return tasks
 
 
 #Main
-
 main()
