@@ -123,6 +123,6 @@ def main(filename):
 
 #Main
 
-filename = "tasks.txt"
+filename = os.path.join("ToDoList", "tasks.txt")
 
 main(filename)
